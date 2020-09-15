@@ -9,7 +9,7 @@
       </div>
     </div>
     <%= render 'relationships/follow_button', user: @user %>
-  </aside>
+     </aside>
   <div class="col-sm-8">
     <ul class="nav nav-tabs nav-justified mb-3">
       <li class="nav-item"><a href="<%= user_path(@user) %>" class="nav-link <%= 'active' if current_page?(user_path(@user)) %>">Microposts  <span class="badge badge-secondary"><%= @count_microposts %></span></a></li>
@@ -17,8 +17,20 @@
       <li class="nav-item"><a href="<%= followers_user_path(@user) %>" class="nav-link <%= 'active' if current_page?(followers_user_path(@user)) %>">Followers  <span class="badge badge-secondary"><%= @count_followers %></span></a></li>
       <li class="nav-item"><a href="<%= likes_user_path(@user) %>" class="nav-link <%= 'active' if current_page?(likes_user_path(@user)) %>">Favorites  <span class="badge badge-secondary"><%= @count_likes %></span></a></li>
     </ul>
-    <%= render 'users', users: @followings %>
+    <ul class="list-unstyled">
+    <% @likes.each do |like| %>
+     <li class="media mb-3">
+       <img class="mr-2 rounded" src="<%= gravatar_url(like.user, { size: 50 }) %>" alt="">
+       <div class="media-body">
+         <div>
+           <%= link_to like.user.name, likes_user_path(like.user) %> <span class="text-muted">posted at <%= like.created_at %></span>
+         </div>
+         <div>
+             <p><%= like.content %></p>
+         </div>
+       </div>
+     </li>
+    <% end %>
+</ul>
   </div>
 </div>
-
-  
